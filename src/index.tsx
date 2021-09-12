@@ -1,53 +1,30 @@
-import type { G10ProviderProps, G10nProps } from './type-utils'
-import React, { createContext, useContext } from 'react'
+import { useRouter } from 'next/router'
 
-const G10nContext = createContext<Partial<G10nProps<string, string>>>({})
-
-export const G10nProvider: G10ProviderProps = ({
-  children,
-  dictionaryMap,
-  locale,
-  defaultLocale,
+export function useG11n<Dictionary>(
+  dictionary: Dictionary,
   useFallback = false
-}) => {
+) {
+  type Locale = keyof Dictionary
+  type Term = keyof Dictionary[Locale]
 
-  return (
-    <G10nContext.Provider
-      value={{
-        dictionaryMap: dictionaryMap ?? {},
-        locale: locale ?? defaultLocale,
-        useFallback
-      }}
-    >
-      {children}
-    </G10nContext.Provider>
-  )
-}
+  const { locale: nextLocale, defaultLocale: nextDefaultLocale } = useRouter()
+  const locale = (nextLocale || nextDefaultLocale) as Locale | undefined
 
-export function useG10n() {
-  const context = useContext(G10nContext)
-
-  if (!context) {
-    throw new Error('useG10n must be used inside a `G10nProvider`')
-  }
-
-
-  const {
-    dictionaryMap,
-    locale = '',
-    useFallback
-  } = context
-
-  if (!dictionaryMap) {
-    throw new Error('`dictionaryMap` cannot be `undefined`')
+  if (!locale) {
+    throw new Error(
+      'Define either `defaultLocale` or `locales` in your `next.config.js`'
+    )
   }
 
   return {
-    translate: (term:keyof typeof dictionaryMap) => {
-      const translatedTerm = dictionaryMap[locale]?.[term] || undefined
-      
-      if (!useFallback && !translatedTerm)  {
-        throw new Error(`key ${String(term)} was not found for locale ${locale}`)
+    translate: (term: Term) => {
+      const language = dictionary[locale]
+      const translatedTerm = language[term]
+
+      if (!useFallback && !translatedTerm) {
+        throw new Error(
+          `key ${String(term)} was not found for locale ${locale}`
+        )
       }
 
       return Boolean(translatedTerm) ? translatedTerm : term

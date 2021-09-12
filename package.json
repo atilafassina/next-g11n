@@ -21,6 +21,7 @@
     "analyze": "size-limit --why"
   },
   "peerDependencies": {
+    "next": ">=11",
     "react": ">=16"
   },
   "husky": {
@@ -55,6 +56,7 @@
     "@types/react": "^17.0.20",
     "@types/react-dom": "^17.0.9",
     "husky": "^7.0.2",
+    "next": "^11.1.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "size-limit": "^5.0.3",

@@ -4,6 +4,9 @@
 
 ## next-g11n 🌐
 
+![npm badge](https://img.shields.io/npm/v/next-g11n?color=%23df0000&style=flat-square)
+![typescript badge](https://img.shields.io/npm/types/next-g11n)
+
 The simplest way to translate and localize your Next.js app
 
 👮 Type-safe dictionaries

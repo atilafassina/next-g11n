@@ -1,3 +1,5 @@
+import { getLocale } from './modules/get-locale'
+import { translator } from './modules/translator'
 import { useRouter } from 'next/router'
 
 export function useG11n<Dictionary>(
@@ -5,29 +7,17 @@ export function useG11n<Dictionary>(
   useFallback = false
 ) {
   type Locale = keyof Dictionary
-  type Term = keyof Dictionary[Locale]
 
-  const { locale: nextLocale, defaultLocale: nextDefaultLocale } = useRouter()
-  const locale = (nextLocale || nextDefaultLocale) as Locale | undefined
+  const nextRouter = useRouter()
 
-  if (!locale) {
-    throw new Error(
-      'Define either `defaultLocale` or `locales` in your `next.config.js`'
-    )
-  }
+  const locale = getLocale(nextRouter) as Extract<Locale, string>
+  const language = dictionary[locale]
 
   return {
-    translate: (term: Term) => {
-      const language = dictionary[locale]
-      const translatedTerm = language[term]
-
-      if (!useFallback && !translatedTerm) {
-        throw new Error(
-          `key ${String(term)} was not found for locale ${locale}`
-        )
-      }
-
-      return Boolean(translatedTerm) ? translatedTerm : term
-    },
+    translate: translator<typeof dictionary[Locale]>(
+      useFallback,
+      language,
+      locale
+    ),
   }
 }

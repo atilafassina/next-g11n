@@ -19,6 +19,7 @@ jest.mock('next/router', () => ({
 describe('when router does not have `locale` neither `defaultLocale`', () => {
   it('should throw error when locale information can be found', () => {
     expect(() => {
+      // eslint-disable-next-line
       const { translate: _translate } = useG11n(dictionary)
     }).toThrow(
       'Define either `defaultLocale` or `locales` in your `next.config.js`'

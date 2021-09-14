@@ -1,11 +1,11 @@
 <div align="right">
-  <img src="next-g11n.png" alt="next-g11n logo" width="200"/>
+  <img src="light-logo.png" alt="next-g11n logo" width="200"/>
 </div>
 
 ## next-g11n 🌐
 
 ![npm badge](https://img.shields.io/npm/v/next-g11n?color=%23df0000&style=flat-square)
-![typescript badge](https://img.shields.io/npm/types/next-g11n)
+![typescript badge](https://img.shields.io/npm/types/next-g11n?style=flat-square)
 
 The simplest way to translate and localize your Next.js app
 

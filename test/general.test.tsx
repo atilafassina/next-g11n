@@ -4,12 +4,16 @@ const dictionary = {
   en: {
     hello: 'Hello world',
     'complex-hello': 'Hello, {{ who }}',
+    'repeating-words':
+      'Learn {{ prefix }} 2017, {{ prefix }} 2018, {{ prefix }} 2019 for free!',
     'many-hello': 'Hello, {{ he }}, {{ she }}, {{ they }}',
     'and-you': ', and you',
   },
   gc: {
     hello: 'dale',
     'complex-hello': 'Dale, {{ who }}',
+    'repeating-words':
+      'Bah, bora aprender {{prefix}} 2017, {{prefix}} 2018, {{prefix}} 2019 de graça!',
     'many-hello': 'Dale, {{ he }}, {{ she }}, {{ they }}',
     'and-you': ', e tu',
   },
@@ -48,6 +52,14 @@ describe('interpolation', () => {
     const { translate: t } = useG11n(dictionary)
 
     expect(t('complex-hello', { who: 'person' })).toMatch('Hello, person')
+  })
+
+  it('can interpolate repeated keys', () => {
+    const { translate: t } = useG11n(dictionary)
+
+    expect(t('repeating-words', { prefix: 'ECMAScript' })).toMatch(
+      'Learn ECMAScript 2017, ECMAScript 2018, ECMAScript 2019 for free!'
+    )
   })
 
   it('can interpolate multiple keys', () => {

@@ -5,8 +5,8 @@ node_modules
 dist
 
 /proto
-src
-example
+/src
+/example
 test
 .vscode
 .github

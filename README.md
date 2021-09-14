@@ -1,6 +1,5 @@
-<div align="right">
+<div align="center">
   <img src="light-logo.png" alt="next-g11n logo" width="200"/>
-</div>
 
 ## next-g11n 🌐
 
@@ -9,8 +8,10 @@
 
 The simplest way to translate and localize your Next.js app
 
+</div>
+
 👮 Type-safe dictionaries
 
-📦 331b (minified and gzipped)
+📦 ~300b (minified and gzipped)
 
 🪡 tailor-made for [Next.js i18n Routing](https://nextjs.org/docs/advanced-features/i18n-routing)

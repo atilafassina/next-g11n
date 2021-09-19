@@ -13,7 +13,7 @@ const dictionary = {
     hello: 'dale',
     'complex-hello': 'Dale, {{ who }}',
     'repeating-words':
-      'Bah, bora aprender {{prefix}} 2017, {{prefix}} 2018, {{prefix}} 2019 de graça!',
+      'Bah, bora aprender {{ prefix }} 2017, {{ prefix }} 2018, {{ prefix }} 2019 de graça!',
     'many-hello': 'Dale, {{ he }}, {{ she }}, {{ they }}',
     'and-you': ', e tu',
   },

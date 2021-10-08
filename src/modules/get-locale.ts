@@ -1,7 +1,7 @@
 import { NextRouter } from 'next/router'
 
 export const getLocale = (router: NextRouter) => {
-  const { locale, defaultLocale } = router
+  const { locale = '', defaultLocale, locales = [] } = router
 
   if (!locale && !defaultLocale) {
     throw new Error(
@@ -9,5 +9,5 @@ export const getLocale = (router: NextRouter) => {
     )
   }
 
-  return locale || defaultLocale
+  return locales.includes(locale) ? locale : defaultLocale
 }

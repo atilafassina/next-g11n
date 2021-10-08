@@ -45,11 +45,11 @@
   "size-limit": [
     {
       "path": "dist/next-g11n.cjs.production.min.js",
-      "limit": "10 KB"
+      "limit": "500 B"
     },
     {
       "path": "dist/next-g11n.esm.js",
-      "limit": "10 KB"
+      "limit": "500 B"
     }
   ],
   "devDependencies": {

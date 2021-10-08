@@ -22,6 +22,7 @@ const dictionary = {
 jest.mock('next/router', () => ({
   useRouter: () => ({
     locale: 'en',
+    locales: ['en', 'gc'],
     defaultLocale: 'gc',
   }),
 }))

@@ -1,4 +1,5 @@
-import { interpolate } from './interpolate'
+import { interpolate, ssrInterpolate } from './interpolate'
+const FIND_VARIABLES_REGEX = /\{\{\s(\S+)\s\}\}/g
 
 export function translator<Language>(
   useFallback: boolean,
@@ -16,8 +17,14 @@ export function translator<Language>(
 
     // pluralization
     // { count: number }
-    if (typeof params === 'object' && typeof translation === 'string') {
-      return interpolate(translation, params)
+    if (typeof translation === 'string') {
+      if (typeof params === 'object') {
+        // client-side hook
+        return interpolate(translation, params)
+      } else if (translation.match(FIND_VARIABLES_REGEX) !== null) {
+        // server-side translation
+        return ssrInterpolate(translation)
+      }
     }
 
     return translation

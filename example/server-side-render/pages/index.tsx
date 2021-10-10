@@ -2,7 +2,7 @@ import type { InferGetStaticPropsType } from 'next'
 import type { Locales, Keys} from '../dictionary'
 import Head from 'next/head'
 import Image from 'next/image'
-import { ssrG11n, getLocale, callableTerm, clientSideCallable } from 'next-g11n'
+import { createStaticTerm, getLocale, createFunctionTerm, clientSideTranslate } from 'next-g11n'
 import styles from '../styles/root.module.css'
 import { DICTIONARY } from '../dictionary'
 import Link from 'next/link'
@@ -11,7 +11,7 @@ import { useRouter } from 'next/router'
 const Home = ({ hello, rawBye }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const router = useRouter()
   const g11nLocale = getLocale(router) as Locales
-  const bye = clientSideCallable<Locales, 'person'>(rawBye)
+  const bye = clientSideTranslate<Locales, 'person'>(rawBye)
 
   return (
     <div className={styles.container}>
@@ -44,8 +44,8 @@ const Home = ({ hello, rawBye }: InferGetStaticPropsType<typeof getStaticProps>)
 }
 
 export const getStaticProps = async () => {
-  const hello = ssrG11n<Keys, Locales>('hello', DICTIONARY)
-  const rawBye = callableTerm('bye', DICTIONARY)
+  const hello = createStaticTerm<Keys, Locales>('hello', DICTIONARY)
+  const rawBye = createFunctionTerm('bye', DICTIONARY)
 
   return { 
     props: {

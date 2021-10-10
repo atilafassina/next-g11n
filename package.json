@@ -20,7 +20,7 @@
     "release": "npx np"
   },
   "peerDependencies": {
-    "next": ">=11",
+    "next": ">=10",
     "react": ">=16"
   },
   "husky": {

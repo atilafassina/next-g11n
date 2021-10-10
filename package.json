@@ -17,7 +17,7 @@
     "test": "tsdx test",
     "lint": "tsdx lint",
     "prepare": "tsdx build",
-    "release": "npx np"
+    "release": "np"
   },
   "peerDependencies": {
     "next": ">=10",
@@ -40,16 +40,6 @@
     "url": "https://atila.io"
   },
   "module": "dist/next-g11n.esm.js",
-  "size-limit": [
-    {
-      "path": "dist/next-g11n.cjs.production.min.js",
-      "limit": "500 B"
-    },
-    {
-      "path": "dist/next-g11n.esm.js",
-      "limit": "500 B"
-    }
-  ],
   "devDependencies": {
     "@size-limit/preset-small-lib": "^5.0.3",
     "@types/react": "^17.0.20",

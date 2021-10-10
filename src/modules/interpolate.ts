@@ -9,11 +9,19 @@ export function interpolate(
   }, term)
 }
 
-export function ssrInterpolate(term: string) {
-  return (params: { [key: string]: string | number }) =>
-    Object.keys(params).reduce((translation, key) => {
-      const token = new RegExp(`{{ ${key} }}`, 'g')
+export function ssrInterpolate<ParamKeys extends string>(
+  translationKey: string
+) {
+  type Params = Record<ParamKeys, string | number>
 
-      return translation.replace(token, String(params[key]))
-    }, term)
+  return (params: Params) => {
+    let paramsList = Object.keys(params)
+
+    return paramsList.reduce<string>((translation, key) => {
+      const token = new RegExp(`{{ ${key} }}`, 'g')
+      const translatedTerm = params[key as keyof Params]
+
+      return translation.replace(token, String(translatedTerm))
+    }, translationKey)
+  }
 }

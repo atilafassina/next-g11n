@@ -26,16 +26,16 @@ type AbstractDictionary = {
   }
 }
 
-function createAllTranslators(
-  languages: string[],
-  dictionary: AbstractDictionary
-) {
-  return languages.reduce((translators, language) => {
-    translators[language] = translator(false, dictionary[language], language)
+// function createAllTranslators(
+//   languages: string[],
+//   dictionary: AbstractDictionary
+// ) {
+//   return languages.reduce((translators, language) => {
+//     translators[language] = translator(false, dictionary[language], language)
 
-    return translators
-  }, {} as { [key: string]: any })
-}
+//     return translators
+//   }, {} as { [key: string]: any })
+// }
 
 function ssrG11n<TranslationKey extends string, Locale extends string>(
   key: TranslationKey,
@@ -50,18 +50,50 @@ function ssrG11n<TranslationKey extends string, Locale extends string>(
   }, {})
 }
 
-function callableTerm<TranslationKey extends string, Locale extends string>(
+function createFunctionTerm<
+  TranslationKey extends string,
+  Locale extends string
+>(
   key: TranslationKey,
   dictionary: AbstractDictionary
 ): Record<Locale, ReturnType<typeof ssrInterpolate>> {
   const languages = Object.keys(dictionary)
-  const translators = createAllTranslators(languages, dictionary)
 
   return languages.reduce<Record<string, any>>((keySet, locale) => {
-    keySet[locale] = translators[locale](key)
+    keySet[locale] = dictionary[locale][key]
 
     return keySet
   }, {})
 }
 
-export { getLocale, ssrG11n, callableTerm, useG11n }
+function callableTerm<TranslationKey extends string, Locale extends string>(
+  key: TranslationKey,
+  dictionary: AbstractDictionary
+): Record<Locale, string> {
+  const languages = Object.keys(dictionary)
+
+  return languages.reduce<Record<string, any>>((keySet, locale) => {
+    keySet[locale] = dictionary[locale][key]
+
+    return keySet
+  }, {})
+}
+
+function clientSideCallable<Locale extends string, Params extends string>(
+  term: ReturnType<typeof callableTerm>
+): Record<Locale, (params: Record<Params, string>) => string> {
+  return Object.keys(term).reduce<Record<string, any>>((callTerm, locale) => {
+    callTerm[locale] = ssrInterpolate<Params>(term[locale])
+
+    return callTerm
+  }, {})
+}
+
+export {
+  getLocale,
+  ssrG11n,
+  callableTerm,
+  createFunctionTerm,
+  clientSideCallable,
+  useG11n,
+}

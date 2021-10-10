@@ -12,6 +12,7 @@ module.exports = {
       ...config.resolve.alias,
       // workaround to get this example to play together with
       // developing the package locally with `yarn link`
+      'next-g11n': path.resolve(__dirname, '../../dist/index'),
       react: path.resolve(__dirname, './node_modules/react'),
       'react-dom': path.resolve(__dirname, './node_modules/react-dom'),
     }

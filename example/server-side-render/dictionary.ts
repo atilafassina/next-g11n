@@ -1,9 +1,11 @@
 export const DICTIONARY = {
   en: {
     hello: 'hello world',
+    bye: 'bye, {{ person }}',
   },
   gc: {
     hello: 'Dale, tchê',
+    bye: 'tchau, {{ person }}',
   },
 }
 

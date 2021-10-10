@@ -2,20 +2,21 @@ import type { InferGetStaticPropsType } from 'next'
 import type { Locales, Keys} from '../dictionary'
 import Head from 'next/head'
 import Image from 'next/image'
-import { ssrG11n, getLocale } from 'next-g11n'
+import { ssrG11n, getLocale, callableTerm, clientSideCallable } from 'next-g11n'
 import styles from '../styles/root.module.css'
 import { DICTIONARY } from '../dictionary'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-const Home = ({ hello }: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Home = ({ hello, rawBye }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const router = useRouter()
   const g11nLocale = getLocale(router) as Locales
-  
+  const bye = clientSideCallable<Locales, 'person'>(rawBye)
+
   return (
     <div className={styles.container}>
       <Head>
-        <title>next-g11n: server-side-rendered</title>
+        <title>next-g11n: server-åside-rendered</title>
         <meta name="description" content="next-g11n server-side-rendered example" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -30,6 +31,9 @@ const Home = ({ hello }: InferGetStaticPropsType<typeof getStaticProps>) => {
         <h1 className={styles.title}>
           {hello[g11nLocale]}
         </h1>
+        <h2>
+          {bye[g11nLocale]({ person: 'Rick'})}
+        </h2>
       </main>
 
       <footer className={styles.footer}>
@@ -39,10 +43,16 @@ const Home = ({ hello }: InferGetStaticPropsType<typeof getStaticProps>) => {
   )
 }
 
-export const getStaticProps = async () => ({
-  props: {
-    hello: ssrG11n<Keys, Locales>('hello', DICTIONARY),
+export const getStaticProps = async () => {
+  const hello = ssrG11n<Keys, Locales>('hello', DICTIONARY)
+  const rawBye = callableTerm('bye', DICTIONARY)
+
+  return { 
+    props: {
+      hello,
+      rawBye
+    }
   }
-})
+}
 
 export default Home

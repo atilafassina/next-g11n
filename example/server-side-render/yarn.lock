@@ -2005,10 +2005,10 @@ natural-compare@^1.4.0:
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=
 
-next-g11n@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/next-g11n/-/next-g11n-0.1.1.tgz#541834f15155ca352568708a30a1b48e83a22761"
-  integrity sha512-TOZCEKXAOV3nLfm2q9sFXPPMeCUUZrlbshopZl6jKhNQnVDcYpSNr+JuHbUIBhTVc1hAUsDmx6Wk9/obMqu+lw==
+next-g11n@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/next-g11n/-/next-g11n-1.0.0.tgz#9fc40dc899c20e6e6a8366c61c7a478f72941c0b"
+  integrity sha512-6Avk5s6GEz1wlVuCiMbL8NL7GmOvWWYlSUwujXWyldtqoxqYlo32sVNODR92ibPYYGkEFKZo6CWSbsdT4QPgKA==
 
 next@11.1.2:
   version "11.1.2"

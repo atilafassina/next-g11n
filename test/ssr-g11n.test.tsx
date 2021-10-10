@@ -1,4 +1,4 @@
-import { callableTerm, ssrG11n } from '../src'
+import { callableTerm, clientSideCallable, ssrG11n } from '../src'
 
 const dictionary = {
   en: {
@@ -32,13 +32,18 @@ describe('when `key` exists', () => {
 
 describe('interpolation', () => {
   it('can interpolate 1 key', () => {
-    const complexHello = callableTerm('complex-hello', dictionary)
+    const rawComplexHello = callableTerm('complex-hello', dictionary)
+    const complexHello = clientSideCallable<'en' | 'gc', 'who'>(rawComplexHello)
+
     expect(complexHello.en({ who: 'you' })).toBe('Hello, you')
     expect(complexHello.gc({ who: 'tu' })).toBe('Dale, tu')
   })
 
   it('can interpolate repeated keys', () => {
-    const repeatingWords = callableTerm('repeating-words', dictionary)
+    const rawRepeatingWords = callableTerm('repeating-words', dictionary)
+    const repeatingWords = clientSideCallable<'en' | 'gc', 'prefix'>(
+      rawRepeatingWords
+    )
 
     expect(repeatingWords.en({ prefix: 'ECMAScript' })).toMatch(
       'Learn ECMAScript 2017, ECMAScript 2018, ECMAScript 2019 for free!'
@@ -49,8 +54,10 @@ describe('interpolation', () => {
   })
 
   it('can interpolate multiple keys', () => {
-    const manyHello = callableTerm('many-hello', dictionary)
-
+    const rawManyHello = callableTerm('many-hello', dictionary)
+    const manyHello = clientSideCallable<'en' | 'gc', 'he' | 'she' | 'they'>(
+      rawManyHello
+    )
     expect(manyHello.en({ he: 'Bob', she: 'Bobba', they: 'Bobs' })).toMatch(
       'Hello, Bob, Bobba, Bobs'
     )

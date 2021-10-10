@@ -1,4 +1,8 @@
-import { callableTerm, clientSideCallable, ssrG11n } from '../src'
+import {
+  clientSideTranslate,
+  createFunctionTerm,
+  createStaticTerm,
+} from '../src'
 
 const dictionary = {
   en: {
@@ -21,7 +25,7 @@ const dictionary = {
 
 describe('when `key` exists', () => {
   it('should return a dictionary for all translations of a `key`', () => {
-    const hello = ssrG11n('hello', dictionary)
+    const hello = createStaticTerm('hello', dictionary)
 
     expect(hello).toMatchObject({
       gc: 'dale',
@@ -32,16 +36,18 @@ describe('when `key` exists', () => {
 
 describe('interpolation', () => {
   it('can interpolate 1 key', () => {
-    const rawComplexHello = callableTerm('complex-hello', dictionary)
-    const complexHello = clientSideCallable<'en' | 'gc', 'who'>(rawComplexHello)
+    const rawComplexHello = createFunctionTerm('complex-hello', dictionary)
+    const complexHello = clientSideTranslate<'en' | 'gc', 'who'>(
+      rawComplexHello
+    )
 
     expect(complexHello.en({ who: 'you' })).toBe('Hello, you')
     expect(complexHello.gc({ who: 'tu' })).toBe('Dale, tu')
   })
 
   it('can interpolate repeated keys', () => {
-    const rawRepeatingWords = callableTerm('repeating-words', dictionary)
-    const repeatingWords = clientSideCallable<'en' | 'gc', 'prefix'>(
+    const rawRepeatingWords = createFunctionTerm('repeating-words', dictionary)
+    const repeatingWords = clientSideTranslate<'en' | 'gc', 'prefix'>(
       rawRepeatingWords
     )
 
@@ -54,8 +60,8 @@ describe('interpolation', () => {
   })
 
   it('can interpolate multiple keys', () => {
-    const rawManyHello = callableTerm('many-hello', dictionary)
-    const manyHello = clientSideCallable<'en' | 'gc', 'he' | 'she' | 'they'>(
+    const rawManyHello = createFunctionTerm('many-hello', dictionary)
+    const manyHello = clientSideTranslate<'en' | 'gc', 'he' | 'she' | 'they'>(
       rawManyHello
     )
     expect(manyHello.en({ he: 'Bob', she: 'Bobba', they: 'Bobs' })).toMatch(
